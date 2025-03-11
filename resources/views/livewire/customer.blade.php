@@ -121,6 +121,7 @@
 
     </x-modal>
 
-     <x-modal-confirm showModalDelete="showModalDelete" title="ลบผู้เข้าพัก" text="คุณต้องการลบผู้เข้าพักใช่หรือไม่ ?" clickConfirm="delete" clickCancel="closeModalDelete">
-    </x-modal-confirm > 
+    <x-modal-confirm showModalDelete="showModalDelete" title="ลบห้องพัก"
+    text="คุณต้องการลบห้องพัก {{ $name}} หรือไม่" clickConfirm="deleteRoom"
+    clickCancel="showModalDelete = false" />
 </div>

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -6,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class PayLogModel extends Model
 {
     protected $table = 'pay_logs';
-    protected $fillable = ['pay_id','amount' ,'pay_date', 'remark'];
+    protected $fillable = ['pay_id', 'amount', 'pay_date', 'status'];
+
     public $timestamps = false;
 
     public function pay() {
