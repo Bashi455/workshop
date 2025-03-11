@@ -1,0 +1,3 @@
+
+
+@livewire('sidebar')
