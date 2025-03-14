@@ -29,6 +29,7 @@ class Pay extends Component {
     public $payLogEditDate;
     public $payLogDeleteId;
     public $payLogRestoreId;
+    public $showModalPayLogForceDelete = false;
 
     public function mount() {
         $this->fetchData();
@@ -134,6 +135,31 @@ class Pay extends Component {
     public function closeModalPayLogDelete() {
         $this->showModalPayLogDelete = false;
     }
+
+    // Force delete
+    public function openModalPayLogForceDelete($id) {
+        $this->showModalPayLogForceDelete = true;
+        $this->payLogDeleteId = $id;
+    }
+    
+    public function closeModalPayLogForceDelete() {
+        $this->showModalPayLogForceDelete = false;
+    }
+    
+    public function forceDeletePayLog() {
+        $payLog = PayLogModel::where('id', $this->payLogDeleteId)
+                             ->where('status', 'delete') // ลบเฉพาะข้อมูลที่ถูกลบไปแล้ว
+                             ->first();
+    
+        if ($payLog) {
+            $payLog->delete(); // Soft Delete ก่อน
+            $payLog->forceDelete(); // ลบถาวรออกจากฐานข้อมูล
+        }
+    
+        $this->fetchData(); // รีโหลดข้อมูล
+        $this->closeModalPayLogForceDelete();
+    }
+    
 
     public function deletePayLog() {
         $payLog = PayLogModel::find($this->payLogDeleteId);

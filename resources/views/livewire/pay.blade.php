@@ -19,8 +19,8 @@
                     <th class="text-left" width="100px">วันที่</th>
                     <th class="text-left" width="300px">รายการ</th>
                     <th class="text-left">หมายเหตุ</th>
-                    <th class="text-right" width="100px">ยอดเงิน</th>
-                    <th width="130px"></th>
+                    <th class="text-right" width="150px">ยอดเงิน</th>
+                    <th width="200px"></th>
                 </tr>
             </thead>
             <tbody>
@@ -29,7 +29,7 @@
                         <td>{{ date('d/m/Y', strtotime($payLog->pay_date)) }}</td>
                         <td>{{ $payLog->pay->name }}
                             @if ($payLog->status == 'delete')
-                                <span class="badge badge-danger">*** ถูกลบ ***</span>
+                                <span class="text-red-500 ml-5">*** ถูกลบ ***</span>
                             @endif
                         </td>
                         <td>{{ $payLog->remark }}</td>
@@ -46,10 +46,14 @@
                             @endif
 
                             @if ($payLog->status == 'delete')
-                                <button class="btn-reverse" wire:click="openModalPayLogRestore({{ $payLog->id }})">
-                                    <i class="fa-solid fa-clock-rotate-left mr-2"></i>                               
-                                 </button>
-                            @endif
+                            <button class="btn-reverse" wire:click="openModalPayLogRestore({{ $payLog->id }})">
+                                <i class="fa-solid fa-clock-rotate-left mr-2"></i>
+                            </button>
+                            <button class="btn-delete-force" wire:click="openModalPayLogForceDelete({{ $payLog->id }})">
+                                <i class="fa-solid fa-trash-can mr-2"></i>
+                            </button>
+                        @endif
+                        
                         </td>
                     </tr>
                 @endforeach
@@ -89,6 +93,12 @@
     <x-modal-confirm title="ยืนยันการกู้คืน" text="คุณต้องการกู้คืนรายการ {{ $payLogEditName }} นี้หรือไม่"
         showModalDelete="showModalPayLogRestore" maxWidth="sm" clickConfirm="restorePayLog()"
         clickCancel="closeModalPayLogRestore()" />
+
+        <x-modal-confirm title="ยืนยันการลบถาวร" 
+        text="คุณต้องการลบรายการนี้แบบถาวรหรือไม่? ข้อมูลจะไม่สามารถกู้คืนได้"
+        showModalDelete="showModalPayLogForceDelete" maxWidth="sm"
+        clickConfirm="forceDeletePayLog()" clickCancel="closeModalPayLogForceDelete()" />
+    
 
     <x-modal title="รายการค่าใช้จ่าย" wire:model="showModalPay" maxWidth="2xl">
         <div>รายการ</div>

@@ -125,7 +125,9 @@ tbody tr:last-child {
 .btn-reverse {
     @apply bg-orange-500 text-white px-2 py-2 pl-4 rounded-md text-xl;
 }
-
+.btn-delete-force {
+    @apply bg-gray-500 text-white px-2 py-2 pl-4 rounded-md text-xl;
+}
 
 /* body content */
 body {
