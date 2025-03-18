@@ -21,7 +21,7 @@
                     <i class="fa solid fa-money-bill me-2"></i>
                     บันทึกการชำระเงิน
                 </li>
-                <li wire:click="changeMenu('contracts')" @if($currentMenu == 'contracts') class="active" @endif>
+                <li wire:click="changeMenu('user')" @if($currentMenu == 'user') class="active" @endif>
                     <i class="fa solid fa-user-pen me-2"></i>
                     ผู้ใช้งาน
                 </li>
