@@ -44,46 +44,62 @@ class User extends Component {
     }   
 
     public function save() {
-        if ($this->password  != $this->password_confirmation) {
+        // ตรวจสอบว่ารหัสผ่านตรงกันหรือไม่
+        if ($this->password !== $this->password_confirmation) {
             $this->error = 'รหัสผ่านไม่ตรงกัน';
             return;
         }
-
-        $user = new UserModel();
-        $password = Hash::make($this->password);
-
-        if ($this->id != null) {
+    
+        // ถ้ามี ID = แก้ไข, ถ้าไม่มี ID = สร้างใหม่
+        if ($this->id) {
             $user = UserModel::find($this->id);
-
-            if ($this->password != null) {
-                $user->password = $password;
-            } else {
-                $user->password = $user->password;
+    
+            // ถ้าหาไม่เจอให้หยุดการทำงาน
+            if (!$user) {
+                $this->error = "ไม่พบผู้ใช้ที่ต้องการแก้ไข";
+                return;
             }
+    
+            // อัปเดตข้อมูล
+            $user->name = $this->name;
+            $user->email = $this->email;
+            if ($this->password) {
+                $user->password = Hash::make($this->password);
+            }
+            $user->level = $this->level;
         } else {
-            $user->password = $password;
+            // สร้างผู้ใช้ใหม่
+            $user = new UserModel();
+            $user->name = $this->name;
+            $user->email = $this->email;
+            $user->password = Hash::make($this->password);
+            $user->level = $this->level;
         }
-
-        $user->name = $this->name;
-        $user->email = $this->email;
-        $user->level = $this->level;
+    
+        // บันทึกข้อมูล
         $user->save();
-
+    
+        // โหลดข้อมูลใหม่
         $this->fetchData();
         $this->closeModal();
-
-        $this->id = null;
     }
+    
 
     public function openModalEdit($id) {
         $this->id = $id;
         $this->showModal = true;
-
+    
         $user = UserModel::find($id);
+        if (!$user) {
+            $this->error = "ไม่พบผู้ใช้ที่ต้องการแก้ไข";
+            return;
+        }
+    
         $this->name = $user->name;
         $this->email = $user->email;
         $this->level = $user->level;
     }
+    
 
     public function closeModalEdit() {
         $this->showModal = false;

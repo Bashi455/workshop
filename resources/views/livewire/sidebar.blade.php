@@ -9,6 +9,10 @@
                     <i class="fa solid fa-chart-line me-2"></i>
                     Dashboard
                 </li>
+                <li wire:click="changeMenu('billing')" @if($currentMenu == 'billing') class="active" @endif>
+                    <i class="fa-solid fa-receipt mr-2"></i>
+                    ใบเสร็จรับเงิน
+                </li>
                 <li wire:click="changeMenu('room')" @if($currentMenu == 'room') class="active" @endif>
                     <i class="fa solid fa-home me-2"></i>
                     ห้องพัก
