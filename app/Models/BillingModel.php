@@ -1,39 +1,43 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\CustomerModel;
-use App\Models\RoomModel;
 
-class BillingModel extends Model 
+class BillingModel extends Model
 {
-    protected $table = 'billing';
+    protected $table = 'billings';
 
     protected $fillable = [
-        'room_id','remark','status','amount_rent','amount_water','amount_electric','amount_internet','amount_fitness','amount_wash','amount_bin','amount_etc'
+        'room_id', 'remark', 'status', 'amount_rent', 
+        'created_at', 'amount_water', 'amount_electric', 'amount_internet',
+        'amount_fitness', 'amount_wash', 'amount_bin', 'amount_etc',
+        'money_added', 'payed_date'
     ];
 
-    public $timestamps = true;
+    public $timestamps = false;
 
-    public function room()
-    {
-        return $this->belongsTo(RoomModel::class, 'room_id');           
+    public function room() {
+        return $this->belongsTo(RoomModel::class, 'room_id', 'id');
     }
 
-    public function getCustomer(){
-        return CustomerModel::where('room_id', $this->room_id)->first();
+    public function customer() {
+        return $this->hasOne(CustomerModel::class, 'room_id', 'room_id');
     }
 
-    public function sumAmount(){
-        return $this->amount_rent + $this->amount_water + $this->amount_electric + $this->amount_internet + $this->amount_fitness + $this->amount_wash + $this->amount_bin + $this->amount_etc;
+    public function sumAmount() {
+        return ($this->amount_rent ?? 0) + ($this->amount_water ?? 0) 
+             + ($this->amount_electric ?? 0) + ($this->amount_internet ?? 0)
+             + ($this->amount_fitness ?? 0) + ($this->amount_wash ?? 0) 
+             + ($this->amount_bin ?? 0) + ($this->amount_etc ?? 0)
+             + ($this->money_added ?? 0);
     }
 
-    public function getStatusName(){
-        switch ($this->status) {
-            case 'wait': return 'รอชำระ';
-            case 'paid': return 'ชำระแล้ว';
-            case 'cancel': return 'ขอค้างชำระ';
-        }
+    public function getStatusName() {
+        return match ($this->status) {
+            'wait' => 'รอชำระเงิน',
+            'paid' => 'ชำระเงินแล้ว',
+            'next' => 'ขอค้างจ่าย',
+            default => 'ไม่ทราบสถานะ'
+        };
     }
 }

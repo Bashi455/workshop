@@ -41,22 +41,38 @@ class Billing extends Component {
         $this->status = 'wait';
     }
 
-    public function fetchData(){
-        $this->rooms = RoomModel::where('is_empty','no')->where('status','use')->orderBy('id','desc')->get();
+   public function fetchData() {
+        $customers = CustomerModel :: where('status', 'use')->get();
+        $rooms = [];
 
-        $this->billings = BillingModel::orderBy('id','desc')->get();
-        $roomNoBillings = [];
+        $this->billings = BillingModel::orderBy('created_at','desc')->get();
 
-            foreach($this->rooms as $room) {
-                foreach($this->billings as $billing) {
-                    if($billing->room_id == $room->id) {
-                        $roomNoBilling[] = $room;
-                    }
+        foreach($customers as $customer) {
+            $isBilling = false;
+
+            foreach($this->billings as $billing) {
+                if($customer->room_id == $billing->room_id) {
+                    $isBilling = true;
+                    break;
                 }
             }
 
-            $this->rooms = $roomNoBilling;
-    }
+            if(!$isBilling) {
+                $rooms[] = [
+                    'id'=>$customer->room_id,
+                    'name'=>$customer->room->name
+                ];
+            }
+        }
+
+        $this->rooms = $rooms;
+
+        if(count($this->rooms) > 0) {
+            $this->roomId = $this->rooms[0]['id'];
+            $this->selectedRoom();
+        }
+        
+   }
 
     public function render() {
         return view('livewire.billing');
@@ -74,8 +90,9 @@ class Billing extends Component {
         $room = RoomModel::find($this->roomId);
         $customer = CustomerModel::where('room_id', $room->id)->first();
 
-        $this->customerName = $customer->name;
-        $this->customerPhone = $customer->phone;
+        $this->customerName = optional($customer)->name ?? 'ไม่พบข้อมูล';
+        $this->customerPhone = optional($customer)->phone ?? '-';
+
         $this->amountRent = $room->price_per_month;
 
         $this->computeSumAmount();
@@ -88,7 +105,8 @@ class Billing extends Component {
     public function save(){
         $billing = new BillingModel();
 
-        if($this->id) {
+        if($this->id 
+        != null) {
             $billing = BillingModel::find($this->id);
         }
 
@@ -96,7 +114,7 @@ class Billing extends Component {
         $billing->created_at = $this->createdAt;
         $billing->status = $this->status;
         $billing->remark = $this->remark;
-        $billing->amount_rent = $this->amountRent;
+        $billing->amount_rent = $this->amountRent ?? 0;
         $billing->amount_water = $this->amountWater ?? 0;
         $billing->amount_electric = $this->amountElectric ?? 0;
         $billing->amount_internet = $this->amountInternet ?? 0;
@@ -104,10 +122,38 @@ class Billing extends Component {
         $billing->amount_wash = $this->amountWash ?? 0;
         $billing->amount_bin = $this->amountBin ?? 0;
         $billing->amount_etc = $this->amountEtc ?? 0;
+        $billing->save();
 
         $this->closeModal();
-        $billing->fetchData();
+        $this->fetchData();
 
         $this->id = null;
+    }
+
+    public function openModalEdit($id) {
+        $this->showModal = true;
+        $this->billings = BillingModel::find($id);
+    }
+    
+    public function closeModalEdit() {
+        $this->showModal = false;
+    }
+
+    public function openModalDelete($id,$name) {
+        $this->showModalDelete = true;
+        $this->id = $id;
+        $this->roomForDelete = $name;
+    }
+
+    public function closeModalDelete() {
+        $this->showModalDelete = false;
+    }
+
+    public function deleteBilling(){
+        $billing = BillingModel::find($this->id);
+        $billing->delete();
+
+        $this->closeModalDelete();
+        $this->fetchData();
     }
 }
