@@ -2,134 +2,130 @@
 @tailwind components;
 @tailwind utilities;
 
-
-/* bar */
-
+/* Sidebar */
 .sidebar {
-    @apply h-4/5 mb-5 w-64 bg-gradient-to-br from-blue-600 to-blue-300 text-white rounded-xl ml-5 p-0;
+    @apply h-4/5 mb-5 w-64 bg-gradient-to-br from-indigo-600 to-purple-400 text-white rounded-2xl ml-5 shadow-2xl transition-all duration-300 ease-in-out hover:shadow-xl;
 }
 .sidebar-header {
-    @apply bg-gradient-to-r from-blue-600 to-blue-400 text-white p-4 text-xl rounded-t-xl border-b border-gray-300;
+    @apply bg-gradient-to-r from-indigo-700 to-purple-500 text-white p-4 text-xl font-semibold rounded-t-2xl border-b border-white/20 shadow-md;
 }
 .navbar {
-    @apply p-5 text-purple-400 border-b-2 border-purple-400 m-5;
+    @apply p-5 text-white border-b-2 border-indigo-600 m-5  shadow-md rounded-lg;
 }
 .sidebar-body {
     @apply p-3 mt-4;
 }
 
-/* menu */
-
-.menu{
-    @apply mb-4;
+/* Menu */
+.menu {
+    @apply mb-4 space-y-2;
 }
 .menu li {
-    @apply p-2 pl-3 rounded-md hover:bg-blue-500 hover:text-gray-800 cursor-pointer;
+    @apply p-2 pl-3 rounded-lg hover:bg-white/20 hover:text-white cursor-pointer transition-all duration-200 ease-in-out flex items-center gap-3;
 }
 .active {
-    @apply bg-blue-500 text-gray-800;
+    @apply bg-white/30 text-white font-semibold;
 }
 
-/* form */
+/* Form */
 .form-control {
-    @apply w-full p-2 border border-gray-300 rounded-md;
+    @apply w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 ease-in-out;
 }
 .content {
-    @apply ml-5 mt-0 p-4 bg-gray-300 rounded-xl mr-5 mb-10;
+    @apply ml-5 mt-0 p-4 bg-white rounded-2xl mr-5 mb-10 shadow-lg;
 }
 
-
-
-/* alert */
-
+/* Alert */
 .content-header {
-    @apply mb-3 text-xl border-b border-gray-600 pb-3;
-    
+    @apply mb-3 text-xl border-b border-gray-600 pb-3 font-semibold;
 }
 .alert {
-    @apply p-3 rounded-md shadow-lg pl-5 mt-5;
+    @apply p-3 rounded-lg shadow-lg pl-5 mt-5 relative overflow-hidden;
 }
 .alert-success {
-    @apply bg-green-600 text-white;
+    @apply bg-green-600 text-white before:absolute before:inset-0 before:bg-green-700 before:opacity-10 before:-z-10;
 }
 .alert-danger {
-    @apply bg-red-500 text-white p-3 rounded-md pl-5 mb-3;
+    @apply bg-red-500 text-white p-3 rounded-lg pl-5 mb-3 before:absolute before:inset-0 before:bg-red-600 before:opacity-10 before:-z-10;
 }
 
-
-
-/* table */
-
+/* Table */
 .table {
-    @apply w-full;
+    @apply w-full border-separate border-spacing-0 overflow-hidden;
 }
 .table th {
-    @apply bg-gray-400 p-2 pl-3;
+    @apply bg-indigo-100 p-2 pl-3 text-indigo-700 font-semibold border-b border-indigo-200;
 }
 .table th:first-child {
-    @apply rounded-tl-md;
+    @apply rounded-tl-lg;
 }
 .table th:last-child {
-    @apply rounded-tr-md;
+    @apply rounded-tr-lg;
 }
 .table td {
-    @apply p-2 pl-3 bg-gray-100;
+    @apply p-2 pl-3 bg-white border-b border-gray-200;
 }
-.table tr:last-child td:first-child {
-    @apply rounded-bl-md;
+.table tr:hover td {
+    @apply bg-indigo-50 transition-colors duration-200;
 }
-.table tr:last-child td:last-child {
-    @apply rounded-br-md;
-}
-tbody tr{
-    @apply border-b border-gray-300;
-}
-tbody tr:last-child {
+.table tr:last-child td {
     @apply border-b-0;
 }
+.table tr:last-child td:first-child {
+    @apply rounded-bl-lg;
+}
+.table tr:last-child td:last-child {
+    @apply rounded-br-lg;
+}
 
-
-
-
-/* button */
+/* Buttons */
 .btn {
-    @apply w-full p-2 bg-purple-500 text-white font-bold rounded-md;
+    @apply w-full p-2 bg-indigo-500 text-white font-bold rounded-lg hover:bg-indigo-600 transition-all duration-200 ease-in-out;
 }
 .btn-primary {
-    @apply bg-blue-500 text-white px-4 py-2 rounded-2xl hover:bg-blue-600 shadow-gray-500 shadow-md;
+    @apply bg-indigo-500 text-white px-4 py-2 rounded-2xl hover:bg-indigo-600 shadow-md shadow-indigo-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
 }
 .btn-danger {
-    @apply bg-red-500 text-white px-4 py-2 rounded-2xl hover:bg-red-600 shadow-gray-500 shadow-md;
+    @apply bg-red-500 text-white px-4 py-2 rounded-2xl hover:bg-red-600 shadow-md shadow-red-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
 }
 .btn-secondary {
-    @apply bg-gray-500 text-white px-4 py-2 rounded-2xl hover:bg-gray-600 shadow-gray-500 shadow-md;
+    @apply bg-gray-500 text-white px-4 py-2 rounded-2xl hover:bg-gray-600 shadow-md shadow-gray-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
 }
 .btn-warning {
-    @apply bg-yellow-500 text-white px-4 py-2 rounded-2xl hover:bg-yellow-600 shadow-gray-500 shadow-md;
+    @apply bg-yellow-500 text-white px-4 py-2 rounded-2xl hover:bg-yellow-600 shadow-md shadow-yellow-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2;
 }
 .btn-success {
-    @apply bg-green-500 text-white px-4 py-2 rounded-2xl hover:bg-green-600 shadow-gray-500 shadow-md;
+    @apply bg-green-500 text-white px-4 py-2 rounded-2xl hover:bg-green-600 shadow-md shadow-green-300  focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2;
 }   
 .btn-info {
-    @apply bg-blue-500 text-white px-4 py-2 rounded-2xl hover:bg-blue-600 shadow-gray-500 shadow-md;
-}
-.btn-edit {
-    @apply bg-blue-500 text-white px-2 py-2 pl-4 rounded-md text-xl;
-}
-.btn-delete {
-    @apply bg-red-500 text-white px-2 py-2 pl-4 rounded-md text-xl;
-}
-.btn-move {
-    @apply bg-gray-500 text-white px-2 py-2 pl-3 pr-3 rounded-md text-xl text-center;
-}
-.btn-reverse {
-    @apply bg-orange-500 text-white px-2 py-2 pl-4 rounded-md text-xl;
-}
-.btn-delete-force {
-    @apply bg-gray-500 text-white px-2 py-2 pl-4 rounded-md text-xl;
+    @apply bg-blue-500 text-white px-4 py-2 rounded-2xl hover:bg-blue-600 shadow-md shadow-blue-300  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
 }
 
-/* body content */
+/* Specific Action Buttons */
+.btn-edit {
+    @apply bg-blue-500 text-white px-2 py-2 pl-4 rounded-lg text-xl hover:bg-blue-600 transition-colors duration-200 shadow-md;
+}
+.btn-delete {
+    @apply bg-red-500 text-white px-2 py-2 pl-4 rounded-lg text-xl hover:bg-red-600 transition-colors duration-200 shadow-md;
+}
+.btn-move {
+    @apply bg-gray-500 text-white px-2 py-2 pl-3 pr-3 rounded-lg text-xl text-center hover:bg-gray-600 transition-colors duration-200 shadow-md;
+}
+.btn-reverse {
+    @apply bg-orange-500 text-white px-2 py-2 pl-4 rounded-lg text-xl hover:bg-orange-600 transition-colors duration-200 shadow-md;
+}
+.btn-delete-force {
+    @apply bg-gray-500 text-white px-2 py-2 pl-4 rounded-lg text-xl hover:bg-gray-600 transition-colors duration-200 shadow-md;
+}
+.btn-print {
+    @apply bg-green-500 text-white px-2 py-2 pl-4 rounded-lg text-xl hover:bg-green-600 transition-colors duration-200 shadow-md;
+}
+.btn-dollar {
+    @apply bg-purple-500 text-white px-2 py-2 pl-4 rounded-lg text-xl hover:bg-purple-600 transition-colors duration-200 shadow-md;
+}
+
+/* Body Content */
 body {
-    font-family: 'Inter', sans-serif; /* Set Inter as the default font */
+    @apply bg-gray-50 text-gray-800;
+    font-family: 'Inter', 'Prompt', sans-serif;
 }

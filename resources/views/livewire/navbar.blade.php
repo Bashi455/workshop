@@ -2,7 +2,7 @@
     <div class="flex items-center justify-between">
         <div>
             <i class="fa fa-solid fa-user me-2"></i>
-            <span class="username">{{ $user_name }}</span>
+            <span class="username ">{{ $user_name }}</span>
         </div>
 
        <div>

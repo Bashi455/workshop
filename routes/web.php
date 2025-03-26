@@ -21,3 +21,6 @@ Route::get('/customer',[CustomerController::class,'index']);
 Route::get('/pay',[PayController::class,'index']);
 Route::get('/user',[UserController::class,'index']);
 Route::get('/billing',[BillingController::class,'index']);
+Route::get('/print-billing/{billingId}',[BillingController::class,'printBilling']);
+Route::get('/print-invoice/{id}',[BillingController::class,'printInvoice']);
+Route::get('/print-all-billings', [BillingController::class, 'printAllBillings'])->name('billing.print.all');
